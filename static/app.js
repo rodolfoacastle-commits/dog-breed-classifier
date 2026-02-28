@@ -88,15 +88,28 @@
     );
   }
 
+  var barkAudio = null;
+
+  function playBark() {
+    if (barkAudio) {
+      barkAudio.pause();
+      barkAudio.currentTime = 0;
+    }
+    barkAudio = new Audio('https://www.myinstants.com/media/sounds/dog-bark.mp3');
+    barkAudio.volume = 0.7;
+    barkAudio.play().catch(function () {});
+  }
+
   function renderCat(data) {
     const message = data.message || 'No Cats Allowed!';
     var fallbackDataUrl = 'data:image/svg+xml,' + encodeURIComponent(
       '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">' +
-      '<rect width="200" height="200" fill="#fed7aa" rx="16" stroke="#f97316" stroke-width="3"/>' +
+      '<rect width="200" height="200" fill="#ddd6fe" rx="16" stroke="#7c3aed" stroke-width="3"/>' +
       '<text x="100" y="118" font-size="72" text-anchor="middle">🐕</text>' +
       '</svg>'
     );
     var gifUrl = 'https://media.giphy.com/media/KX7khoMaKYRXlZWDd6/giphy.gif';
+    playBark();
     return (
       '<div class="result-card result-cat">' +
         '<div class="easter-egg-gif-wrap">' +
