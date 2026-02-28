@@ -8,6 +8,9 @@ import io
 import os
 from pathlib import Path
 
+from dotenv import load_dotenv
+load_dotenv()
+
 # Use project-local cache so we don't need write access to ~/.cache
 _PROJECT_ROOT = Path(__file__).resolve().parent
 _CACHE_DIR = _PROJECT_ROOT / ".cache"

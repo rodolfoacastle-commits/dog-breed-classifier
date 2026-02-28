@@ -12,6 +12,18 @@ pip install -r requirements.txt
 
 First run will download the Hugging Face dog-breeds model (one-time).
 
+### Etsy API (optional but recommended)
+
+Sweater recommendations use the [Etsy Open API v3](https://developers.etsy.com/documentation/). Without credentials the app shows placeholder sweaters; with them you get real Etsy listings.
+
+1. Register an app at [etsy.com/developers/register](https://www.etsy.com/developers/register).
+2. Copy your **keystring** and **shared secret** from [Your Apps](https://www.etsy.com/developers/your-apps).
+3. Create a `.env` file in the project root (see `.env.example`):
+   ```
+   ETSY_API_KEYSTRING=your_keystring_here
+   ETSY_SHARED_SECRET=your_shared_secret_here
+   ```
+
 ## Run
 
 ```bash
@@ -52,4 +64,3 @@ After that, your repo will be on GitHub and you can share the link.
 ## Optional
 
 - Replace `static/barking-dog.gif` with a real barking-dog GIF for the cat easter egg.
-- Plug a real shopping API into `sweater_service.get_sweaters_for_breed()` (see comments in `sweater_service.py`).
