@@ -11,7 +11,11 @@ ENV HOME=/home/user \
 WORKDIR /home/user/app
 
 COPY --chown=user requirements.txt .
+
+# Install CPU-only PyTorch first (much smaller than the default CUDA build),
+# then the rest of the dependencies.
 RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir torch torchvision --index-url https://download.pytorch.org/whl/cpu && \
     pip install --no-cache-dir -r requirements.txt
 
 RUN mkdir -p /home/user/app/.cache/huggingface /home/user/app/.cache/torch/hub && \
