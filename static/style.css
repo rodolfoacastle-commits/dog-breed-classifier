@@ -1,13 +1,13 @@
-/* Dog Breed Classifier — Gen Z palette: lavender/mint + coral accent, DM Sans, playful but quality */
+/* Dog Breed Classifier — Lavender palette: deep violet accent, soft lilac surfaces */
 
 :root {
-  --bg: #f5f0fa;
-  --surface: #fff;
-  --accent: #f97316;
-  --accent-soft: #fed7aa;
-  --text: #1f2937;
-  --text-muted: #6b7280;
-  --border: #e9d5ff;
+  --bg: #ede8f7;
+  --surface: #faf8ff;
+  --accent: #7c3aed;
+  --accent-soft: #ddd6fe;
+  --text: #1e1b2e;
+  --text-muted: #7c6fa0;
+  --border: #c4b5fd;
   --radius: 1rem;
   --font: "DM Sans", system-ui, sans-serif;
 }
@@ -94,7 +94,7 @@ body {
 
 .btn:hover:not(:disabled) {
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.35);
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.35);
 }
 
 .btn-primary {
@@ -333,7 +333,7 @@ body {
 
 /* Error */
 .result-error .error-message {
-  color: #b91c1c;
+  color: #9b1c9b;
   margin: 0 0 1rem;
 }
 
