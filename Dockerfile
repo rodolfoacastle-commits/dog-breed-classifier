@@ -1,22 +1,24 @@
 FROM python:3.9-slim
 
 RUN useradd -m -u 1000 user
+
 ENV HOME=/home/user \
     PATH=/home/user/.local/bin:$PATH \
     HF_HOME=/home/user/app/.cache/huggingface \
     TRANSFORMERS_CACHE=/home/user/app/.cache/huggingface \
     TORCH_HOME=/home/user/app/.cache/torch
 
-WORKDIR $HOME/app
+WORKDIR /home/user/app
 
 COPY --chown=user requirements.txt .
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
+RUN mkdir -p /home/user/app/.cache/huggingface /home/user/app/.cache/torch/hub && \
+    chown -R user:user /home/user/app
+
 USER user
 COPY --chown=user . .
-
-RUN mkdir -p .cache/huggingface .cache/torch/hub
 
 # Pre-download the breed model at build time so cold starts are fast
 RUN python -c "\
