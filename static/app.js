@@ -91,13 +91,14 @@
   var barkAudio = null;
 
   function playBark() {
-    if (barkAudio) {
-      barkAudio.pause();
-      barkAudio.currentTime = 0;
-    }
-    barkAudio = new Audio('https://www.myinstants.com/media/sounds/dog-bark.mp3');
-    barkAudio.volume = 0.7;
-    barkAudio.play().catch(function () {});
+    var bark1 = new Audio('https://www.myinstants.com/media/sounds/dog-bark.mp3');
+    bark1.volume = 0.7;
+    bark1.play().catch(function () {});
+    bark1.addEventListener('ended', function () {
+      var bark2 = new Audio('https://www.myinstants.com/media/sounds/dog-bark.mp3');
+      bark2.volume = 0.7;
+      bark2.play().catch(function () {});
+    });
   }
 
   function renderCat(data) {
@@ -108,7 +109,7 @@
       '<text x="100" y="118" font-size="72" text-anchor="middle">🐕</text>' +
       '</svg>'
     );
-    var gifUrl = 'https://media.giphy.com/media/KX7khoMaKYRXlZWDd6/giphy.gif';
+    var gifUrl = 'https://media.giphy.com/media/26uf43dkw9ByWsjLi/giphy.gif';
     playBark();
     return (
       '<div class="result-card result-cat">' +
