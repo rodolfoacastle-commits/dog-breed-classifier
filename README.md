@@ -1,3 +1,12 @@
+---
+title: Dog Breed Classifier
+emoji: 🐕
+colorFrom: purple
+colorTo: orange
+sdk: docker
+app_port: 7860
+---
+
 # Dog Breed Classifier
 
 Upload a photo or PDF (first page) of a dog to get top-3 breed predictions with circular percentage graphs and recommended dog sweaters. Cat uploads trigger a “No Cats Allowed!” easter egg.
@@ -48,6 +57,17 @@ The project is already a git repo with an initial commit. To put it on GitHub:
    If GitHub asks you to sign in, use a [Personal Access Token](https://github.com/settings/tokens) as the password when prompted.
 
 After that, your repo will be on GitHub and you can share the link.
+
+## Deploy to Hugging Face Spaces
+
+1. Create a new Space at [huggingface.co/new-space](https://huggingface.co/new-space) — select **Docker** as the SDK.
+2. Push this repo to the Space (or link your GitHub repo).
+3. In the Space **Settings**, add your Etsy secrets as environment variables:
+   - `ETSY_API_KEYSTRING`
+   - `ETSY_SHARED_SECRET`
+4. The Space will build the Docker image and deploy automatically.
+
+The Dockerfile pre-downloads the ML model at build time so the app starts quickly.
 
 ## Optional
 
