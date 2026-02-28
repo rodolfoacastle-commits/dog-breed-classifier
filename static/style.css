@@ -1,0 +1,343 @@
+/* Dog Breed Classifier — Gen Z palette: lavender/mint + coral accent, DM Sans, playful but quality */
+
+:root {
+  --bg: #f5f0fa;
+  --surface: #fff;
+  --accent: #f97316;
+  --accent-soft: #fed7aa;
+  --text: #1f2937;
+  --text-muted: #6b7280;
+  --border: #e9d5ff;
+  --radius: 1rem;
+  --font: "DM Sans", system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding: 1.5rem;
+}
+
+.container {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.header h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+}
+
+.tagline {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.upload-section {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--border);
+}
+
+.upload-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.file-label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.file-label-text {
+  font-weight: 600;
+}
+
+.file-hint {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+#file-input {
+  font-family: var(--font);
+  padding: 0.5rem 0;
+}
+
+.btn {
+  font-family: var(--font);
+  font-weight: 600;
+  padding: 0.75rem 1.25rem;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.35);
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn-secondary {
+  background: var(--accent-soft);
+  color: var(--text);
+}
+
+.btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Loading */
+.loading {
+  text-align: center;
+  padding: 2rem;
+}
+
+.loading.hidden {
+  display: none;
+}
+
+.loading p {
+  margin: 1rem 0 0;
+  color: var(--text-muted);
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Result container */
+.result-container {
+  margin-top: 1.5rem;
+}
+
+.result-container.visible {
+  display: block;
+}
+
+.result-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--border);
+}
+
+.result-card h2 {
+  font-size: 1.25rem;
+  margin: 0 0 1rem;
+}
+
+.result-image {
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  border-radius: var(--radius);
+  margin-bottom: 1rem;
+  display: block;
+}
+
+/* Circular percentage graph */
+.breeds-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.breed-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.circular-progress {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: conic-gradient(var(--accent) calc(var(--pct) * 1%), var(--border) 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circular-progress::before {
+  content: "";
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background: var(--surface);
+}
+
+.circular-progress {
+  position: relative;
+}
+
+.circular-progress-value {
+  position: absolute;
+  font-weight: 700;
+  font-size: 0.9rem;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.breed-name {
+  font-size: 0.85rem;
+  text-align: center;
+  max-width: 100px;
+  word-break: break-word;
+}
+
+/* Sweaters */
+.sweaters-section {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.sweaters-section h3 {
+  font-size: 1.1rem;
+  margin: 0 0 1rem;
+}
+
+.sweaters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1rem;
+}
+
+.sweater-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: var(--text);
+  background: var(--bg);
+  border-radius: var(--radius);
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.sweater-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.sweater-card img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+.sweater-name {
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+  text-align: center;
+  line-height: 1.2;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.sweater-price {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin-top: 0.25rem;
+}
+
+/* Cat easter egg */
+.result-cat {
+  text-align: center;
+}
+
+.easter-egg-gif-wrap {
+  min-height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.easter-egg-gif {
+  max-width: 280px;
+  width: 100%;
+  height: auto;
+  min-height: 160px;
+  object-fit: contain;
+  border-radius: var(--radius);
+  display: block;
+}
+
+.easter-egg-gif-fallback {
+  width: 160px;
+  height: 160px;
+  background: var(--accent-soft);
+  border-radius: var(--radius);
+  align-items: center;
+  justify-content: center;
+  font-size: 5rem;
+}
+
+.easter-egg-title {
+  font-size: 1.5rem;
+  color: var(--accent);
+}
+
+/* Other / not dog */
+.result-message {
+  margin: 0 0 1rem;
+  color: var(--text-muted);
+}
+
+/* Error */
+.result-error .error-message {
+  color: #b91c1c;
+  margin: 0 0 1rem;
+}
+
+/* Try another button in cards */
+.result-card .btn-secondary {
+  margin-top: 1rem;
+}

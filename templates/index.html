@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What breed is this good boy?</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="container">
+    <header class="header">
+      <h1>What breed is this good boy?</h1>
+      <p class="tagline">Upload a photo or PDF — we’ll guess the breed (and find a sweater).</p>
+    </header>
+
+    <section id="upload-section" class="upload-section">
+      <form id="upload-form" class="upload-form" enctype="multipart/form-data">
+        <label class="file-label" for="file-input">
+          <span class="file-label-text">Choose an image or PDF</span>
+          <span class="file-hint">JPG, PNG, WebP, GIF, BMP or PDF — max 10MB</span>
+        </label>
+        <input type="file" id="file-input" name="file" accept=".jpg,.jpeg,.png,.webp,.gif,.bmp,.pdf" required>
+        <button type="submit" id="submit-btn" class="btn btn-primary">Find out</button>
+      </form>
+    </section>
+
+    <div id="loading" class="loading hidden" aria-live="polite">
+      <div class="spinner"></div>
+      <p>Thinking like a good boy…</p>
+    </div>
+
+    <div id="result" class="result-container"></div>
+  </main>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
