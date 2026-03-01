@@ -5,6 +5,9 @@
   const loading = document.getElementById('loading');
   const resultContainer = document.getElementById('result');
   const uploadSection = document.getElementById('upload-section');
+  const gallerySection = document.getElementById('gallery');
+  const galleryGrid = document.getElementById('gallery-grid');
+  const galleryEmpty = document.getElementById('gallery-empty');
 
   function showLoading(show) {
     loading.classList.toggle('hidden', !show);
@@ -171,6 +174,7 @@
       .then(function (json) {
         if (json.is_dog) {
           showResult(renderDog(json));
+          loadGallery();
         } else if (json.is_cat) {
           showResult(renderCat(json));
         } else {
@@ -184,4 +188,38 @@
         showLoading(false);
       });
   });
+
+  function renderGallery(items) {
+    if (!items || !items.length) {
+      galleryEmpty.classList.remove('hidden');
+      galleryGrid.innerHTML = '';
+      galleryGrid.classList.add('hidden');
+      return;
+    }
+    galleryEmpty.classList.add('hidden');
+    galleryGrid.classList.remove('hidden');
+    galleryGrid.innerHTML = items.map(function (item) {
+      var topBreed = item.breeds && item.breeds[0] ? item.breeds[0] : null;
+      var label = topBreed ? escapeHtml(topBreed.name) : 'Unknown';
+      var pct = topBreed ? topBreed.percentage + '%' : '';
+      return (
+        '<div class="gallery-card">' +
+          '<img src="' + item.thumbnail + '" alt="' + label + '" class="gallery-thumb">' +
+          '<div class="gallery-info">' +
+            '<span class="gallery-breed">' + label + '</span>' +
+            (pct ? '<span class="gallery-pct">' + pct + '</span>' : '') +
+          '</div>' +
+        '</div>'
+      );
+    }).join('');
+  }
+
+  function loadGallery() {
+    fetch('/api/history?t=' + Date.now())
+      .then(function (res) { return res.json(); })
+      .then(renderGallery)
+      .catch(function () {});
+  }
+
+  loadGallery();
 })();

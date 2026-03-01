@@ -5,11 +5,9 @@ Accepts image or PDF upload, runs ImageNet gate (dog/cat/other), then breed mode
 
 import base64
 import io
+import json
 import os
 from pathlib import Path
-
-from dotenv import load_dotenv
-load_dotenv()
 
 # Use project-local cache so we don't need write access to ~/.cache
 _PROJECT_ROOT = Path(__file__).resolve().parent
@@ -46,6 +44,37 @@ MAX_CONTENT_MB = 10
 
 app = Flask(__name__)
 app.config["MAX_CONTENT_LENGTH"] = MAX_CONTENT_MB * 1024 * 1024
+
+MAX_HISTORY = 20
+_HISTORY_FILE = _CACHE_DIR / "prediction_history.json"
+prediction_history: list[dict] = []
+
+
+def _load_history() -> None:
+    global prediction_history
+    try:
+        if _HISTORY_FILE.exists():
+            with open(_HISTORY_FILE, "r") as f:
+                prediction_history = json.load(f)[:MAX_HISTORY]
+    except Exception:
+        prediction_history = []
+
+
+def _save_history() -> None:
+    try:
+        with open(_HISTORY_FILE, "w") as f:
+            json.dump(prediction_history[:MAX_HISTORY], f)
+    except Exception:
+        pass
+
+
+def _make_thumbnail(pil_image: Image.Image, size: int = 128) -> str:
+    thumb = pil_image.copy()
+    thumb.thumbnail((size, size))
+    buf = io.BytesIO()
+    thumb.save(buf, format="JPEG", quality=70)
+    b64 = base64.b64encode(buf.getvalue()).decode("utf-8")
+    return f"data:image/jpeg;base64,{b64}"
 
 
 def allowed_file(filename: str) -> bool:
@@ -205,6 +234,15 @@ def predict():
         sweaters = get_sweaters_for_breed(top_breed_name, limit=4)
         image_data = pil_to_base64_data_url(pil_image)
 
+        thumbnail = _make_thumbnail(pil_image)
+        prediction_history.insert(0, {
+            "thumbnail": thumbnail,
+            "breeds": breeds,
+        })
+        if len(prediction_history) > MAX_HISTORY:
+            prediction_history.pop()
+        _save_history()
+
         return jsonify({
             "is_dog": True,
             "image": image_data,
@@ -232,5 +270,13 @@ def predict():
         return jsonify({"error": err or "Something went wrong. Please try again."}), 500
 
 
+@app.route("/api/history")
+def history():
+    r = jsonify(prediction_history)
+    r.headers["Cache-Control"] = "no-cache, no-store"
+    return r
+
+
 if __name__ == "__main__":
+    _load_history()
     app.run(debug=True, port=5001)
