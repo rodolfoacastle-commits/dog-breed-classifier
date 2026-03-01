@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+  <div class="page-frame">
   <main class="container">
     <header class="header">
       <h1>What breed is this good boy?</h1>
@@ -40,6 +41,7 @@
     <div id="gallery-grid" class="gallery-grid"></div>
     <p id="gallery-empty" class="gallery-empty hidden">No predictions yet. Upload a dog photo to get started!</p>
   </section>
+  </div>
   <script src="{{ url_for('static', filename='app.js') }}"></script>
 </body>
 </html>
